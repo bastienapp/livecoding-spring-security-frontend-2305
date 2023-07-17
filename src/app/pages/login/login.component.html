@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()">
+  <fieldset [formGroup]="authForm">
+    <label>
+      <span>Email :</span>
+      <input type="email" formControlName="email" />
+    </label>
+    <label>
+      <span>Mot de passe :</span>
+      <input type="password" formControlName="password" />
+    </label>
+  </fieldset>
+  <button type="submit">Se connecter</button>
+</form>
+<div>{{ authError }}</div>
