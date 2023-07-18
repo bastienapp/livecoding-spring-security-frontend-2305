@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthApiService } from 'src/app/services/auth-api.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +19,14 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthApiService
+    private authService: AuthService
   ) { }
 
   onSubmit() {
     const email = this.authForm.value.email || '';
     const password = this.authForm.value.password || '';
+
+    localStorage.removeItem('auth_token');
     this.authService
       .login(email, password)
       .subscribe(
