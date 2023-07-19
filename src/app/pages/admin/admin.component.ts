@@ -3,12 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthApiService } from 'src/app/services/auth-api.service';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
 })
-export class UserComponent implements OnInit {
-
+export class AdminComponent {
   content: string = "Chargement...";
 
   constructor(private authService: AuthApiService) { }
@@ -16,7 +15,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
 
     this.authService
-      .userAccess()
+      .adminAccess()
       .subscribe({
         next: (response) => {
           this.content = response;

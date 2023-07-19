@@ -49,4 +49,23 @@ export class AuthApiService {
         }
       )
   }
+
+  adminAccess() {
+    // récupérer le token
+    const token = localStorage.getItem('auth_token');
+
+    // ajouter le token dans l'en-tête
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http
+      .get(
+        `${environment.baseApiUrl}/admin`,
+        {
+          headers: headers,
+          responseType: 'text'
+        }
+      )
+  }
 }

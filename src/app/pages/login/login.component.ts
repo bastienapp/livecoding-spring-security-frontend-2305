@@ -1,7 +1,9 @@
-import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthApiService } from 'src/app/services/auth-api.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,9 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthApiService
+    private authService: AuthApiService,
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   onSubmit() {
@@ -33,7 +37,8 @@ export class LoginComponent {
             const { token, user } = response;
             localStorage.setItem('auth_token', token);
             localStorage.setItem('user', JSON.stringify(user));
-            alert("Vous êtes connecté !");
+            this.toastr.success("Vous êtes connecté !");
+            this.router.navigate(["/profile"]);
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === HttpStatusCode.Unauthorized) {
