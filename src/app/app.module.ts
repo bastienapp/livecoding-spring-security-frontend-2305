@@ -5,13 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './pages/user/user.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
 import { provideToastr } from 'ngx-toastr';
 import { AdminComponent } from './pages/admin/admin.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,6 @@ import { AdminComponent } from './pages/admin/admin.component';
     AdminComponent
   ],
   imports: [
-
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     HttpClientModule,
@@ -31,6 +31,7 @@ import { AdminComponent } from './pages/admin/admin.component';
     AppRoutingModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideAnimations(), // required animations providers
     provideToastr(), // Toastr providers
   ],

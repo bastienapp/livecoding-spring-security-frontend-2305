@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthApiService } from 'src/app/services/auth-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthApiService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +29,8 @@ export class LoginComponent {
   onSubmit() {
     const email = this.authForm.value.email || '';
     const password = this.authForm.value.password || '';
+    // supprimer un ancien JWT avant de se connecter
+    localStorage.removeItem('auth_token');
     this.authService
       .login(email, password)
       .subscribe(

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AuthApiService } from 'src/app/services/auth-api.service';
+import { AuthApiService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
