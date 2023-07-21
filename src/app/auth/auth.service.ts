@@ -1,19 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-
-type AuthResponse = {
-  token: string,
-  user: {
-    id: string,
-    email: string,
-    picture: string,
-    role: {
-      id: number,
-      name: string
-    }[]
-  }
-}
+import { AuthReponse } from '../models/authResponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +16,7 @@ export class AuthApiService {
       password: password,
     }
     return this.http
-      .post<AuthResponse>(`${environment.baseApiUrl}/api/auth/login`, formData);
+      .post<AuthReponse>(`${environment.baseApiUrl}/api/auth/login`, formData);
   }
 
   userAccess() {
