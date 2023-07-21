@@ -6,7 +6,7 @@ import { AuthReponse } from '../models/authResponse.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthApiService {
+export class AuthService {
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AuthApiService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,7 +10,7 @@ import { AuthApiService } from 'src/app/auth/auth.service';
 export class AdminComponent {
   content: string = "Chargement...";
 
-  constructor(private authService: AuthApiService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
