@@ -7,10 +7,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './pages/user/user.component';
-import { AuthenticationInterceptor } from './auth/auth.interceptor';
-import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+import { provideToastr } from 'ngx-toastr';
 import { AdminComponent } from './pages/admin/admin.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,22 +22,18 @@ import { AdminComponent } from './pages/admin/admin.component';
     AdminComponent
   ],
   imports: [
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(), // ToastrModule added
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideAnimations(), // required animations providers
-    provideToastr(), // Toastr providers,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthenticationInterceptor,
-      multi: true
-    }
+    provideToastr(), // Toastr providers
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -19,13 +21,15 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   onSubmit() {
     const email = this.authForm.value.email || '';
     const password = this.authForm.value.password || '';
-
+    // supprimer un ancien JWT avant de se connecter
     localStorage.removeItem('auth_token');
     this.authService
       .login(email, password)
@@ -35,7 +39,8 @@ export class LoginComponent {
             const { token, user } = response;
             localStorage.setItem('auth_token', token);
             localStorage.setItem('user', JSON.stringify(user));
-            alert("Vous êtes connecté !");
+            this.toastr.success("Vous êtes connecté !");
+            this.router.navigate(["/profile"]);
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === HttpStatusCode.Unauthorized) {
