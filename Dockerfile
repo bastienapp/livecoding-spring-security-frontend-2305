@@ -1,10 +1,12 @@
 # Dockerfile frontend
 # build environment
 FROM node:lts-slim as build
-COPY . /build/
-WORKDIR /build/
-ENV PATH /build/node_modules/.bin:$PATH
+WORKDIR /build
+COPY package.json package-lock.json ./
+ENV PATH ./node_modules/.bin:$PATH
 RUN npm ci
+COPY . .
+RUN npm install -g @angular/cli
 RUN ng build --configuration production --output-path=dist
 
 # production environment
