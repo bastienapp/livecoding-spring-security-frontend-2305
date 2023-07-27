@@ -2,11 +2,9 @@
 # build environment
 FROM node:lts-slim as build
 WORKDIR /build
-COPY package.json package-lock.json ./
+COPY . .
 ENV PATH ./node_modules/.bin:$PATH
 RUN npm ci
-COPY . .
-RUN npm install -g @angular/cli
 RUN ng build --configuration production --output-path=dist
 
 # production environment
